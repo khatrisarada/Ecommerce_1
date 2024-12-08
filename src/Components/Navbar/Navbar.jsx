@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { IoMdSearch } from "react-icons/io";
 import { FaCartPlus, FaCaretDown, FaShoppingBag } from "react-icons/fa";
 
@@ -16,113 +16,58 @@ const Dropdownlist = [
 ];
 
 const Navbar = ({ handleOrderPopup }) => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  // Toggle Dark Mode
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    document.documentElement.classList.toggle("dark");
-  };
-
   return (
-    <div
-      className={`sticky top-0 z-50 shadow-lg ${
-        darkMode
-          ? "bg-gray-800 text-white"
-          : "bg-gradient-to-r from-purple-600 to-blue-500 text-white"
-      }`}
-    >
-      <div className="container mx-auto flex justify-between items-center py-3 px-5">
-        {/* Logo */}
-        <a
-          href="#"
-          className="flex items-center text-2xl font-bold tracking-wide gap-2"
-        >
-          <FaShoppingBag size={30} />
-          ShopMe
-        </a>
-
-        {/* Search Bar */}
-        <div className="hidden sm:flex items-center relative">
-          <input
-            type="text"
-            placeholder="Search..."
-            className={`w-64 pl-4 pr-10 py-2 rounded-full ${
-              darkMode
-                ? "bg-gray-700 text-white focus:ring-gray-600"
-                : "text-gray-700 focus:ring-blue-300"
-            } focus:outline-none focus:ring-2 transition`}
-          />
-          <IoMdSearch
-            className={`absolute right-3 cursor-pointer ${
-              darkMode ? "text-gray-300" : "text-gray-600"
-            }`}
-          />
+    <div className="shadow-md bg-white dark:bg-text-white duration-200 relative z-40">
+      <div className="bg bg-primary/40 py-2">
+        <div className="container flex justify-between items-center">
+          <div>
+            <a href="#" className="font-bold text-xl items-center flex gap-1">
+              <FaShoppingBag size={30} />
+              ShopMe
+            </a>
+          </div>
+          <div className="flex justify-between items-center gap-4">
+            <div className="relative group hidden sm:block">
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-[200px] sm:w-[200px] group-hover:w-[300px] transition-all duration-300 rounded-lg border border-gray-300 py-1 px-2 text-sm focus:outline-none focus:border-primary dark:border-gray-500 dark:bg-slate-800"
+              />
+              <IoMdSearch className="text-slate-800 group-hover:text-primary absolute top-1/2 -translate-y-1/2 right-3" />
+            </div>
+            <button
+              onClick={() => {
+                handleOrderPopup();
+              }}
+              className="bg-gradient-to-t from-primary to-secondary transition-all duration-200 text-white py-1 px-4 rounded-full flex items-center gap-3 group"
+            >
+              <span className="group-hover:block hidden transition-all duration-200">Order</span>
+              <FaCartPlus className="text-xl text-white drop-shadow-sm cursor-pointer" />
+            </button>
+          </div>
         </div>
-
-        {/* Order Button */}
-        <button
-          onClick={handleOrderPopup}
-          className={`hidden sm:flex items-center gap-2 py-2 px-4 rounded-full ${
-            darkMode
-              ? "bg-gray-700 hover:bg-gray-600"
-              : "bg-blue-500 hover:bg-blue-700"
-          } transition`}
-        >
-          <span>Order</span>
-          <FaCartPlus size={20} />
-        </button>
-
-        {/* Dark Mode Toggle */}
-        <button
-          onClick={toggleDarkMode}
-          className={`ml-4 p-2 rounded-full ${
-            darkMode ? "bg-yellow-400" : "bg-gray-300"
-          }`}
-        >
-          {darkMode ? "🌞" : "🌙"}
-        </button>
       </div>
-
-      {/* Navigation Links */}
-      <div className={darkMode ? "bg-gray-700" : "bg-purple-700"}>
-        <ul className="flex justify-center items-center gap-6 py-2">
+      <div data-aos="zoom-in" className="flex justify-center">
+        <ul className="sm:flex hidden items-center gap-4">
           {Menu.map((data) => (
             <li key={data.id}>
-              <a
-                href={data.link}
-                className={`${
-                  darkMode ? "hover:text-yellow-300" : "hover:text-yellow-400"
-                } transition duration-200`}
-              >
+              <a href={data.link} className="inline-block px-4 hover:text-primary duration-200">
                 {data.name}
               </a>
             </li>
           ))}
-
-          {/* Dropdown */}
-          <li className="relative group">
-            <a
-              href="#"
-              className={`flex items-center gap-1 ${
-                darkMode ? "hover:text-yellow-300" : "hover:text-yellow-400"
-              } transition`}
-            >
+          <li className="group relative cursor-pointer">
+            <a href="#" className="flex items-center gap-[2px] py-2">
               Trending Products
-              <FaCaretDown />
+              <span>
+                <FaCaretDown className="transition-all duration-200 group-hover:rotate-180" />
+              </span>
             </a>
-            <div
-              className={`absolute hidden group-hover:block ${
-                darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-              } rounded shadow-lg mt-2 w-48`}
-            >
-              <ul className="py-2">
+            <div className="absolute z-[9999] hidden group-hover:block w-[200px] rounded-md bg-white p-2 text-black shadow-md">
+              <ul>
                 {Dropdownlist.map((data) => (
                   <li key={data.id}>
-                    <a
-                      href={data.link}
-                      className="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700"
-                    >
+                    <a href={data.link} className="inline-block w-full rounded-md p-2 hover:bg-primary/20">
                       {data.name}
                     </a>
                   </li>
