@@ -7,20 +7,20 @@ export default {
 
   theme: {
     extend: {
-      colors:{
-        primary: "4763eb",
-        secondary: "63e3be"
+      colors: {
+        primary: "#4763eb",
+        secondary: "#63e3be",
       },
-      container:{
+      container: {
         center: true,
-        padding:{
-          DEFAULT: '1rem',
-          sm: "3rem"
-        }
+        padding: {
+          DEFAULT: "1rem",
+          sm: "3rem",
+        },
       },
-
     },
   },
+  darkMode: "class", // Change from "selector" to "class"
   plugins: [],
-}
-
+  
+};
