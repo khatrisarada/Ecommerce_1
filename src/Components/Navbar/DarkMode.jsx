@@ -1,41 +1,43 @@
-import React, { useEffect, useState } from "react";
-import LightButton from "../../assets/light-mode-button.png";
-import DarkButton from "../../assets/dark-mode-button.png";
+import React, { useState, useEffect } from "react";
+import LightButton from "../../assets/light-mode-button.png"; // Fixed variable name
+import DarkButton from "../../assets/dark-mode-button.png";  // Fixed variable name
 
 const DarkMode = () => {
   const [theme, setTheme] = useState(
-    localStorage.getItem("theme") || "light"
+    localStorage.getItem("theme") || "light" // Default to "light" if no theme is saved
   );
 
+  const element = document.documentElement; // Root element (<html>)
+
   useEffect(() => {
-    const root = document.documentElement; // Target <html>
     if (theme === "dark") {
-      root.classList.add("dark");
+      element.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      root.classList.remove("dark");
+      element.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
-    localStorage.setItem("theme", theme); // Save theme to localStorage
   }, [theme]);
 
   return (
-    <div className="relative">
+    <div className="relative flex justify-end items-center p-4">
       {/* Light Mode Button */}
       <img
         src={LightButton}
-        alt="Light Mode"
-        className={`w-8 h-8 cursor-pointer ${
-          theme === "dark" ? "opacity-0" : "opacity-100"
-        }`}
+        alt="Switch to Light Mode"
         onClick={() => setTheme("light")}
+        className={`w-12 h-12 cursor-pointer transition-opacity duration-300 ${
+          theme === "dark" ? "opacity-100" : "opacity-0"
+        }`}
       />
       {/* Dark Mode Button */}
       <img
         src={DarkButton}
-        alt="Dark Mode"
-        className={`w-8 h-8 cursor-pointer ${
-          theme === "dark" ? "opacity-100" : "opacity-0"
-        }`}
+        alt="Switch to Dark Mode"
         onClick={() => setTheme("dark")}
+        className={`w-12 h-12 cursor-pointer transition-opacity duration-300 ${
+          theme === "dark" ? "opacity-0" : "opacity-100"
+        }`}
       />
     </div>
   );
